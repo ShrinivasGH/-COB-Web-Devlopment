@@ -1,0 +1,52 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class TypingSpeedTest {
+
+    public static void main(String[] args) {
+        String sentence = generateRandomSentence();
+        System.out.println("Type the following sentence:");
+
+        System.out.println(sentence);
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Press Enter when you are ready to start typing...");
+        scanner.nextLine();
+
+        long startTime = System.currentTimeMillis();
+
+        System.out.println("Start typing:");
+
+        String userTypedText = scanner.nextLine().trim();
+
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+
+        // Calculate words per minute (WPM)
+        int wordCount = sentence.split("\\s+").length;
+        double minutes = elapsedTime / 60000.0;
+        int wpm = (int) (wordCount / minutes);
+
+        // Compare user input with the generated sentence
+        if (userTypedText.equals(sentence)) {
+            System.out.println("Congratulations! You typed the sentence correctly.");
+            System.out.println("Your typing speed: " + wpm + " words per minute.");
+        } else {
+            System.out.println("Sorry, there were errors in your typing.");
+        }
+
+        scanner.close();
+    }
+
+    private static String generateRandomSentence() {
+        String[] words = {"The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"};
+        Random random = new Random();
+
+        StringBuilder sentence = new StringBuilder();
+        for (int i = 0; i < 5; i++) {
+            sentence.append(words[random.nextInt(words.length)]).append(" ");
+        }
+
+        return sentence.toString().trim();
+    }
+}
